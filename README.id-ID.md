@@ -1,13 +1,13 @@
 ![Dchisel Logo](https://i.ibb.co/vhgkzNH/DChisel-1.png)
 
 # DChisel Dart Framework  
-DChisel is simple Dart Framework for creating REST API
+Dchisel adalah dart framework simpel untuk membuat REST API
 
 [![pub package](https://img.shields.io/pub/v/dchisel.svg)](https://pub.dev/packages/dchisel) 
 
 [![English Documentation](https://img.shields.io/badge/LANGUAGE-ENGLISH-blue)](https://github.com/alalawy/DChisel/blob/master/README.md) [![Indonesia Documentation](https://img.shields.io/badge/LANGUAGE-INDONESIA-blue)](https://github.com/alalawy/DChisel/blob/master/README.id-ID.md)
 
-## Features
+## Fitur-Fitur
 
 * Custom host server and port
 * GET, POST, PUT, DELETE, PATCH Routes
@@ -21,12 +21,14 @@ DChisel is simple Dart Framework for creating REST API
 * Base64 decode to File
 * Hotreload
 
-## Usage
+## Penggunaan
 
-To add the dchisel to your Dart application read the [install](https://pub.dev/packages/dchisel/install) instructions.
+untuk menambahkan Dchisel pada aplikasi dart silahkan baca instruksi instalasi di sini : [instruksi instalasi](https://pub.dev/packages/dchisel/install)
 
 #### Host Server
-Default host is "localhost" and port 8000
+
+"localhost" dan port "8000" adalah host dan port bawaan dari Dchisel
+
 ```dart
 import 'package:dchisel/dchisel.dart';
 
@@ -39,21 +41,25 @@ Future<void> main(List<String> arguments) async {
   DChisel().serve(getroutes: route());
 }
 ```
-If you want to change the host to 0.0.0.0 and port to 5555 you can use :
+
+jika ingin merubah host menjadi 0.0.0.0 dengan port 5555 kamu bisa gunakan:
 
 ```dart
- DChisel().serve(getroutes: route(), serverHost: '0.0.0.0', serverPort: 5555);
+ droute.get('/hello', (Request request) {
+    return 'Hello, World';
 ```
 
 #### GET Route
 ```dart
-droute.get('/hello', (Request request) {
-    return 'Hello, World';
+droute.get('/getparam/<name>', (Request request, String name) {
+    return 'Hello, $name';
+});
 });
 ```
-GET with param you can use :
+jika ingin menambahkan parameter pada Get route kamu bisa gunakan:
+
 ```dart
-droute.get('/getparam/<name>', (Request request, String name) {
+DChisel().routeGet('/getparam/<name>', (Request request, String name) {
     return 'Hello, $name';
 });
 ```
@@ -64,11 +70,11 @@ droute.post('/hello', (Request request) async {
     return 'Hello, World';
 });
 ```
-If you want to get Body value from your POST request, use :
+jika ingin mendapatkan nilai pada body dari POST request, gunakan:
 ```dart
 var body = await request.body.asJson;
 ```
-If you want to get Header value from your POST request, use :
+jika ingin mendapatkan nilai dari header dari POST request gunakan:
 ```dart
 var headers = await request.headers;
 ```
@@ -78,12 +84,12 @@ droute.put('/hello/<name>', (Request request, String name) async {
   return 'Hello, $name';
 });
 ```
-PUT also can get Header and Body request
+PUT juga bisa mendapatkan request header maupun request body 
 ```dart
 var headers = await request.headers;
 var body = await request.body.asJson;
 ```
-#### DELETE Route
+#### DELETE Route 
 ```dart
 droute.delete('/hello/<name>', (Request request, String name) async {
   return 'Hello, $name';
@@ -91,28 +97,34 @@ droute.delete('/hello/<name>', (Request request, String name) async {
 ```
 
 ## Dchisel ORM
-For now, DChisel only support PostgreSQL and MySQL
+untuk saat ini, Dchisel hanya mendukung PostgreSQL dan MySQL
 
-#### DB Config
+#### DB Config (konfigurasi database)
 ```dart
-DChiselDB().configDB('dialect', // DIALECT DATABASE, IF YOU USE POSTGRESQL CHANGE 'dialect' to 'postgre', IF YOU USE MYSQL CHANGE 'dialect' to 'mysql'
+DChiselDB().configDB('dialect', // DIALECT DATABASE, JIKA ANDA MENGGUNAKAN POSTGRESQL MAKA UBAH 'dialect' menjadi 'postgre', JIKA ANDA MENGGUNAKAN MYSQL MAKA UBAH 'dialect' menjadi 'mysql'
+///ubah host sesuai dengan host di environtment-mu
     host: 'your_host',
+///ubah sesuai nama database di environtment-mu
     db: 'your_db_name',
+///ubah sesuai port yang digubnakan
     port: your_port, //integer
+///ubah sesuai username pada database
     username: 'your_db_username',
+///ubah sesuai password pada database
     password: 'your_db_password');
 ```
-#### Get All Data
+#### Get All Data (mengambil seluruh data)
 ```dart
 DChiselDB().getAll('your_table_name');
 ```
-#### Get Data With Custom Column and Filter
+#### Get Data With Custom Column and Filter (mengambil data pada column dan filter tertentu)
 ```dart
 DChiselDB().getOption('your_table_name', 
     column: 'your_column1,your_column2', 
     where: ['your_column_name', 'your_filter_value']);
 ```
 If you want filter contains, just add % into your filter value, example :
+jika ingin melakukan 'contains filter', hanya tambahkan '%' pada nilai filter, contoh penggunaan:
 ```dart
 '%your_filter_value%'
 ```
@@ -143,12 +155,13 @@ DChiselDB().deleteOption('your_table_name', where: ['your_filter_column_name', '
 
 ## Issues
 
-Please file any issues, bugs or feature requests as an issue on our [GitHub](https://github.com/alalawy/DChisel/issues) page. Commercial support is available, you can contact us at <alphacsoft@gmail.com>.
+Mohon jika menemukan masalah, bugs atau permintaan penambahan fitur sebaga issue pada halaman [GitHub](https://github.com/alalawy/DChisel/issues) kami. Dukungan komersial tersedia, anda bisa menghubungi kontak kami di alphacsoft@gmail.com>.
+
 
 ## Want to contribute
 
-If you would like to contribute to the plugin (e.g. by improving the documentation, solving a bug or adding a cool new feature), please carefully review our [contribution guide](../CONTRIBUTING.md) and send us your [pull request](https://github.com/alalawy/DChisel/pulls).
+Jika anda ingin melakukan kontribusi (seperti meningkatkan dokumentasi, memecahkan masalah atau menambahkan fitur baru yang keren), Dimohon untuk meninjau [Panduan Kontribusi](../CONTRIBUTING.md) dan kirimkan [pull request - mu](https://github.com/alalawy/DChisel/pulls).
 
 ## Author
 
-This dchisel framework for Dart is developed by [Alphacsoft](https://alphacsoft.com).
+Framework Dchisel untuk Dart ini dikembangkan oleh [Alphacsoft](https://alphacsoft.com).
